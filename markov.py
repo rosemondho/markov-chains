@@ -9,10 +9,10 @@ def open_and_read_file(file_path):
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
+    contents = open(file_path).read()
+    words = contents.split()
 
-    # your code goes here
-
-    return 'Contents of your file as one long string'
+    return words
 
 
 def make_chains(text_string):
@@ -42,17 +42,32 @@ def make_chains(text_string):
 
     chains = {}
 
-    # your code goes here
+    for i in range(len(text_string) - 2):
+        key = (text_string[i], text_string[i+1]) # creates tuple
+        value = text_string[i+2]
+        if key not in chains:
+            chains[key] = []        
+        
+        chains[key].append(value)
 
     return chains
 
 
 def make_text(chains):
-    """Return text from chains."""
+    """ Return text from chains. """
 
     words = []
+    key = choice(list(chains))
+    # add key pair to words list
+    words.extend(key)  
 
-    # your code goes here
+    while key in chains:
+        # choose random word from value
+        value = choice(chains[key])
+        # add value to words
+        words.append(value)
+        # assign second key and value as new key
+        key = (key[1], value)
 
     return ' '.join(words)
 
